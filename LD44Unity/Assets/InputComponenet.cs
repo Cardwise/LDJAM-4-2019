@@ -11,15 +11,9 @@ public class InputComponenet : MonoBehaviour
     public Transform shootPoint;
 
     public BloodGauge bloodGauge;
-    public int bloodCostPerShot = 5;
+    public MeleeAttack meleeAttack;
 
-    public int meleeBloodRecovery = 10;
-    public int meleeDamage = 10;
-    public Vector2 meleeHitboxSize = Vector2.one;
-    public GameObject meleeHitBox;
-    public FiniteTimer meleeCooldown = new FiniteTimer(0, .5f);
-    public Transform meleeAttackCenter;
-    public LayerMask meleeDamageLayer;
+    public BloodSpell curSpell;
 
     void Start()
     {
@@ -37,44 +31,29 @@ public class InputComponenet : MonoBehaviour
         float angle = Mathf.Atan2(faceDir.y, faceDir.x) * Mathf.Rad2Deg;
         setRotation(angle);
 
-        if (!meleeCooldown.isComplete())
-            meleeCooldown.updateTimer(Time.deltaTime);
-
         if (Input.GetMouseButtonDown(0)) {
             shoot(angle);
         }
-        if (Input.GetMouseButtonDown(1) && meleeCooldown.isComplete())
+        if (Input.GetMouseButtonDown(1))
         {
-            meleeAttack(angle);
+            if (meleeAttack.canUse(bloodGauge.CurAmount)) {
+                int cost = 0;
+                int recovery = 0;
+                meleeAttack.use(angle, out cost, out recovery);
+                bloodGauge.addBlood(-cost + recovery);
+            }
         }
     }
 
     public void shoot(float angle) {
-        if (bloodGauge.canCast(bloodCostPerShot))
-        {
-            Instantiate(bulletPrefab, shootPoint.position, Quaternion.AngleAxis(angle, Vector3.forward));
-            bloodGauge.addBlood(-bloodCostPerShot);
-        }
+        if (curSpell.canUse(bloodGauge.CurAmount)) {
+            int cost = 0;
+            int recovery = 0;
+            curSpell.use(angle, out cost, out recovery);
+            bloodGauge.addBlood(-cost + recovery);
+        }      
     }
-
-    public void meleeAttack(float angle)
-    {
-        Collider2D[] results = Physics2D.OverlapBoxAll(meleeAttackCenter.position, meleeHitboxSize, angle, meleeDamageLayer);
-        for (int i = 0; i < results.Length; i++) {
-            Damagable damagee = results[i].GetComponent<Damagable>();
-            if (damagee != null) {
-                damagee.takeDamage(meleeDamage);
-                bloodGauge.addBlood(meleeBloodRecovery);
-            }
-        }
-
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(meleeAttackCenter.position, meleeHitboxSize);
-    }
+ 
 
     public void setRotation(float angle) {     
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);

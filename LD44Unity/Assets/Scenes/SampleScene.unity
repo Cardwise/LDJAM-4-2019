@@ -130,8 +130,10 @@ GameObject:
   m_Component:
   - component: {fileID: 272389193}
   - component: {fileID: 272389196}
+  - component: {fileID: 272389194}
+  - component: {fileID: 272389195}
   m_Layer: 0
-  m_Name: Square (1)
+  m_Name: caster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,6 +153,42 @@ Transform:
   m_Father: {fileID: 469125466}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &272389194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272389192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afddb8136d82d4b468675ca1bcd6c2f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bloodRecoveryOnSuccess: 0
+  bloodCostPerShot: 5
+  bulletPrefab: {fileID: 5721231720809403445, guid: eaf7af71c2ade3b4bb1b159436b87086,
+    type: 3}
+  shotPoint: {fileID: 272389193}
+--- !u!114 &272389195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272389192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00f302b14c43cdf468560d6c4e1d82df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curSpellIndex: 0
+  spells:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  mouseScrollthreshold: 0.1
+  mouseScrollTracker: 0
 --- !u!212 &272389196
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -239,18 +277,8 @@ MonoBehaviour:
     type: 3}
   shootPoint: {fileID: 272389193}
   bloodGauge: {fileID: 0}
-  bloodCostPerShot: 5
-  meleeBloodRecovery: 10
-  meleeDamage: 10
-  meleeHitboxSize: {x: 1.11, y: 1.42}
-  meleeHitBox: {fileID: 0}
-  meleeCooldown:
-    timer: 0
-    maxValue: 0.5
-  meleeAttackCenter: {fileID: 1365902712}
-  meleeDamageLayer:
-    serializedVersion: 2
-    m_Bits: 6144
+  meleeAttack: {fileID: 1365902713}
+  curSpell: {fileID: 272389194}
 --- !u!50 &469125464
 Rigidbody2D:
   serializedVersion: 4
@@ -740,6 +768,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1365902712}
+  - component: {fileID: 1365902713}
   m_Layer: 0
   m_Name: meleeCenter
   m_TagString: Untagged
@@ -755,12 +784,34 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1365902711}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.659, y: 0.007, z: 0}
-  m_LocalScale: {x: 1, y: 0.298, z: 1}
+  m_LocalPosition: {x: 0.59, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 469125466}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1365902713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365902711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66eb6805c2a81fb4a832003d15beb045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bloodRecoveryOnSuccess: 0
+  meleeBloodRecovery: 10
+  meleeDamage: 10
+  meleeHitboxSize: {x: 0.88, y: 1.28}
+  meleeCooldown:
+    timer: 0
+    maxValue: 0.5
+  meleeDamageLayer:
+    serializedVersion: 2
+    m_Bits: 6144
 --- !u!1 &1450678343
 GameObject:
   m_ObjectHideFlags: 0

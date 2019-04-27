@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class BloodGauge : MonoBehaviour,canChangeRatio
 {
-    public float maxAmount = 100;
-    public float CurAmount { get => curAmount; }
-    float curAmount;
+    public int  maxAmount = 100;
+    public int CurAmount { get => curAmount; }
+    int curAmount;
 
     public event Action<float> onChangeEvent;
 
